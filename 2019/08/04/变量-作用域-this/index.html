@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next muse use-motion" lang="zh-CN">
+<html class="theme-next gemini" lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="generator" content="Hexo 3.9.0">
@@ -26,9 +26,9 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '7.3.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     save_scroll: false,
     copycode: {"enable":false,"show_result":false,"style":null},
@@ -46,7 +46,7 @@
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     path: '',
     tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
       copy_success: '复制成功',
@@ -63,7 +63,7 @@
 <meta property="og:description" content="基本类型和引用数据类型 ES变量可能包含两种不同的数据类型的值：基本类型值和引用类型值。  基本数据类型：目前共有Undefined、Null、Boolean、Number、String、BigInt、Symbol这7中类型，基本数据类型变量在stack（栈内存）中存储标识符与值。基本类型可以直接操作保存在变量中的实际的值，所以是按值访问的。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.qianhui.com/images/scope.png">
-<meta property="og:updated_time" content="2019-08-04T10:56:56.824Z">
+<meta property="og:updated_time" content="2019-08-04T15:34:26.526Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="变量 作用域 this">
 <meta name="twitter:description" content="基本类型和引用数据类型 ES变量可能包含两种不同的数据类型的值：基本类型值和引用类型值。  基本数据类型：目前共有Undefined、Null、Boolean、Number、String、BigInt、Symbol这7中类型，基本数据类型变量在stack（栈内存）中存储标识符与值。基本类型可以直接操作保存在变量中的实际的值，所以是按值访问的。">
@@ -174,8 +174,6 @@
   </li>
   </ul>
 
-    
-
 </nav>
 </div>
     </header>
@@ -186,6 +184,8 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+            
+
           <div id="content" class="content page-post-detail">
             
 
@@ -231,7 +231,7 @@
                 
               
 
-              <time title="创建时间：2019-08-04 18:56:23 / 修改时间：18:56:56" itemprop="dateCreated datePublished" datetime="2019-08-04T18:56:23+08:00">2019-08-04</time>
+              <time title="创建时间：2019-08-04 18:56:23 / 修改时间：23:34:26" itemprop="dateCreated datePublished" datetime="2019-08-04T18:56:23+08:00">2019-08-04</time>
             </span>
           
             
@@ -320,24 +320,24 @@
 <p>func.call(thisArg, arg1, arg2, arg3…)</p>
 </blockquote>
 <p><code>call()</code>方法和<code>apply()</code>方法作用相同，区别仅在接收参数的方式不同，调用<code>call()</code>方法时，传递给函数的参数必须逐个列举出来</p>
-<p>case1.</p>
+<p><strong>case1.</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 扩充作用域</span></span><br><span class="line"><span class="keyword">let</span> color = <span class="string">'green'</span></span><br><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">	color: <span class="string">'blue'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayColor</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> 	alert (<span class="keyword">this</span>.color)</span><br><span class="line">&#125;</span><br><span class="line">sayColor() <span class="comment">// 'green'</span></span><br><span class="line">sayColor.call(o) <span class="comment">// 'blue'</span></span><br></pre></td></tr></table></figure>
 
-<p>case2.</p>
+<p><strong>case2.</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将一个数组添加到另一个数组中</span></span><br><span class="line"><span class="keyword">let</span> numbers = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]</span><br><span class="line"><span class="keyword">let</span> elements = [<span class="string">'a'</span>, <span class="string">'b'</span>]</span><br><span class="line">numbers.push.apply(numbers, elements)</span><br></pre></td></tr></table></figure>
 
-<p>case3.</p>
+<p><strong>case3.</strong></p>
 <p>创建一个可以重复使用的辅助绑定函数,下面的例子无论怎样调用<code>bar</code>，总会手动在<code>obj</code>上调用<code>foo</code>。这种绑定是一种显示的强制绑定，称为硬绑定。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  a: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">arg</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a, arg)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.a + arg</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 辅助绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span> (<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fn.apply(obj, <span class="built_in">arguments</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> bar = bind(foo, obj)</span><br><span class="line"><span class="keyword">let</span> b = bar(<span class="number">3</span>) <span class="comment">// 2 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
 
 <p>这种硬绑定是一种非常常用的模式，所以ES5提供了内置方法<code>Function.prototype.bind</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">arg</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a, arg)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.a + arg</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  a: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> bar = foo.bind(obj)</span><br><span class="line"><span class="keyword">let</span> b = bar(<span class="number">3</span>) <span class="comment">// 2, 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b) <span class="comment">//5</span></span><br></pre></td></tr></table></figure>
 
-<p>case4.</p>
+<p><strong>case4.</strong></p>
 <p>第三方库的许多函数，以及<code>JavaScript</code>语言和宿主环境中许多新的内置函数，都提供了一个可选的参数，通常被称为“上下文”<code>（context</code>），其作用和<code>bind(..)</code>一样，确保你的回调函数使用指定的<code>this</code>。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(el, <span class="keyword">this</span>.id)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  id: <span class="string">'a'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用foo时把this绑定到obj</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].forEach(foo, obj) <span class="comment">// 1 a 2 a 3 a</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="new绑定"><a href="#new绑定" class="headerlink" title="new绑定"></a>new绑定</h4><p>使用new来调用函数，即发生构造函数调用时，会自动执行以下操作：</p>
+<h4 id="new绑定"><a href="#new绑定" class="headerlink" title="new绑定"></a>new绑定</h4><p>使用new来调用函数，即发生构造函数调用时，会自动执行以下操作:</p>
 <ol>
 <li><p>创建（或者说构造）一个全新的对象。</p>
 </li>
@@ -471,7 +471,7 @@
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.3.0</div>
 
         
 
@@ -494,15 +494,18 @@
   </div>
 
   
+    
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
 <script src="/js/utils.js?v=7.3.0"></script>
-  <script src="/js/motion.js?v=7.3.0"></script>
 
 
-  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
 
 
 <script src="/js/next-boot.js?v=7.3.0"></script>
