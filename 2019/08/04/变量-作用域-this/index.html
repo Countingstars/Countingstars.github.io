@@ -56,19 +56,20 @@
 </script>
 
   <meta name="description" content="基本类型和引用数据类型 ES变量可能包含两种不同的数据类型的值：基本类型值和引用类型值。  基本数据类型：目前共有Undefined、Null、Boolean、Number、String、BigInt、Symbol这7中类型，基本数据类型变量在stack（栈内存）中存储标识符与值。基本类型可以直接操作保存在变量中的实际的值，所以是按值访问的。">
+<meta name="keywords" content="JS,变量,作用域,this">
 <meta property="og:type" content="article">
 <meta property="og:title" content="变量 作用域 this">
-<meta property="og:url" content="http://www.qianhui.com/2019/08/04/变量-作用域-this/index.html">
+<meta property="og:url" content="http://www.qianhui.tk/2019/08/04/变量-作用域-this/index.html">
 <meta property="og:site_name" content="栗子的博客">
 <meta property="og:description" content="基本类型和引用数据类型 ES变量可能包含两种不同的数据类型的值：基本类型值和引用类型值。  基本数据类型：目前共有Undefined、Null、Boolean、Number、String、BigInt、Symbol这7中类型，基本数据类型变量在stack（栈内存）中存储标识符与值。基本类型可以直接操作保存在变量中的实际的值，所以是按值访问的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.qianhui.com/images/scope.png">
-<meta property="og:updated_time" content="2019-08-05T09:44:00.314Z">
+<meta property="og:image" content="http://www.qianhui.tk/images/scope.png">
+<meta property="og:updated_time" content="2019-08-06T09:03:26.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="变量 作用域 this">
 <meta name="twitter:description" content="基本类型和引用数据类型 ES变量可能包含两种不同的数据类型的值：基本类型值和引用类型值。  基本数据类型：目前共有Undefined、Null、Boolean、Number、String、BigInt、Symbol这7中类型，基本数据类型变量在stack（栈内存）中存储标识符与值。基本类型可以直接操作保存在变量中的实际的值，所以是按值访问的。">
-<meta name="twitter:image" content="http://www.qianhui.com/images/scope.png">
-  <link rel="canonical" href="http://www.qianhui.com/2019/08/04/变量-作用域-this/">
+<meta name="twitter:image" content="http://www.qianhui.tk/images/scope.png">
+  <link rel="canonical" href="http://www.qianhui.tk/2019/08/04/变量-作用域-this/">
 
 
 <script id="page-configurations">
@@ -197,7 +198,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.qianhui.com/2019/08/04/变量-作用域-this/">
+    <link itemprop="mainEntityOfPage" href="http://www.qianhui.tk/2019/08/04/变量-作用域-this/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="栗子">
@@ -244,11 +245,35 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-05 17:44:00" itemprop="dateModified" datetime="2019-08-05T17:44:00+08:00">2019-08-05</time>
+                <time title="修改时间：2019-08-06 17:03:26" itemprop="dateModified" datetime="2019-08-06T17:03:26+08:00">2019-08-06</time>
               </span>
             
           
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a></span>
 
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon"
+              >
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
           <br>
 
         </div>
@@ -270,15 +295,12 @@
 <h3 id="变量复制和参数传递"><a href="#变量复制和参数传递" class="headerlink" title="变量复制和参数传递"></a>变量复制和参数传递</h3><blockquote>
 <p>JavaScript变量的拷贝都是按栈内存内的值传递， 函数的参数传递与变量复制传递表现一致</p>
 </blockquote>
-<p><strong>参考：</strong><a href="https://juejin.im/post/5c189120f265da611204f194" target="_blank" rel="noopener">JS与内存</a></p>
 <h3 id="检测类型"><a href="#检测类型" class="headerlink" title="检测类型"></a>检测类型</h3><p><code>typeof</code>操作符，是确定基本数据类型的最佳变量</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>, b = <span class="string">'1'</span>, c = <span class="literal">true</span>, d, e = <span class="literal">null</span>, f = <span class="keyword">new</span> <span class="built_in">Object</span>(), </span><br><span class="line">    g = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;, h = <span class="string">'undefined'</span>, i = symbol()</span><br><span class="line"><span class="keyword">const</span> x = <span class="number">2</span>n ** <span class="number">53</span>n</span><br><span class="line"><span class="keyword">typeof</span> a <span class="comment">// 'number'</span></span><br><span class="line"><span class="keyword">typeof</span> b <span class="comment">// 'string'</span></span><br><span class="line"><span class="keyword">typeof</span> c <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> f <span class="comment">// 'object'</span></span><br><span class="line"><span class="keyword">typeof</span> g <span class="comment">// 'function'</span></span><br><span class="line"><span class="keyword">typeof</span> h <span class="comment">// 'undefined'</span></span><br><span class="line"><span class="keyword">typeof</span> i <span class="comment">// 'symbol'</span></span><br><span class="line"><span class="keyword">typeof</span> x <span class="comment">// bigint</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>参考：</strong><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/typeof" target="_blank" rel="noopener">typeof操作符</a></p>
 <p><code>instanceof</code>,如果变量是给定引用类型的实例（根据构造函数的prototype属性是否出现在对象的原型链中的任何位置来判断），则返回true</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span> (<span class="params">make, model, year</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.make = make;</span><br><span class="line">  <span class="keyword">this</span>.model = model;</span><br><span class="line">  <span class="keyword">this</span>.year = year;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> auto = <span class="keyword">new</span> Car(<span class="string">'Honda'</span>, <span class="string">'Accord'</span>, <span class="number">1998</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(auto <span class="keyword">instanceof</span> Car) <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(auto <span class="keyword">instanceof</span> <span class="built_in">Object</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>参考：</strong><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof" target="_blank" rel="noopener">instanceof</a></p>
 <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><blockquote>
 <p>作用域为一套规则，这套规则用来管理引擎如何在当前作用域以及嵌套的子作用域中根据标识符名称进行变量查找。Js采用的是<strong>词法作用域</strong>，词法作用域是由你在写代码时将变量和块作用域写在哪里来决定的。</p>
 </blockquote>
@@ -308,7 +330,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// setTimeout每隔1s，将timer函数插入到队列中，直到循环结束依次执行，</span></span><br><span class="line"><span class="comment">// 由于i被封闭在全局作用域中，所以每次循环,timer共享同一个i的引用</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">1</span>; i&lt;=<span class="number">5</span>; i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( i )</span><br><span class="line">  &#125;, i*<span class="number">1000</span> )</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 6, 6, 6, 6, 6</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><blockquote>
-<p><a href="https://www.zhihu.com/question/35562228" target="_blank" rel="noopener">引入this的初衷就是想在原型继承的情况下，拿到函数的调用者</a></p>
+<p>引入this的初衷就是想在原型继承的情况下，拿到函数的调用者</p>
 </blockquote>
 <p>上面那句话是让我恍然大悟一下子明白this绑定谁，this只看函数执行时的调用方式，不管在哪里声明。接下来详细讲下绑定this的四种规则</p>
 <h4 id="默认绑定"><a href="#默认绑定" class="headerlink" title="默认绑定"></a>默认绑定</h4><p><code>foo()</code>作为独立函数调用，因此使用默认绑定，<code>this</code>指向全局对象，注意，在<strong>严格模式下</strong>，全局对象将无法使用默认绑定，<code>this</code>会绑定到<code>undefined</code>上</p>
@@ -372,14 +394,56 @@
 <li>默认：严格模式下绑定<code>undefined</code>，否则绑定到全局对象上</li>
 <li><code>ES6</code>的箭头函数不会应用上述四种规则，而是继承外层函数调用的<code>this</code>绑定。</li>
 </ol>
+<hr>
+<div class="note success">
+            <p><strong>参考链接</strong>:</p><ul><li><a href="https://juejin.im/post/5c189120f265da611204f194" target="_blank" rel="noopener">JS与内存</a></li><li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/typeof" target="_blank" rel="noopener">typeof操作符</a></li><li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof" target="_blank" rel="noopener">instanceof</a></li><li><a href="https://www.zhihu.com/question/35562228" target="_blank" rel="noopener">this 指向</a></li></ul>
+          </div>
+    </div>
 
+    <div>
+      
+      <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;margin: 30px 0;">
+      -------------- 本文结束，感谢阅读(￣▽￣)~*--------------
+    </div>
+  
+</div>
+      
     </div>
 
     
     
     
+      <div>
+        
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>栗子</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.qianhui.tk/2019/08/04/变量-作用域-this/" title="变量 作用域 this">http://www.qianhui.tk/2019/08/04/变量-作用域-this/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
 
     <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/变量/" rel="tag"># 变量</a>
+          
+            <a href="/tags/作用域/" rel="tag"># 作用域</a>
+          
+            <a href="/tags/this/" rel="tag"># this</a>
+          
+        </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
               <a href="/2019/08/04/数组自定义方法/" rel="next" title="数组自定义方法">
@@ -391,6 +455,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+              <a href="/2019/08/05/对象-原型-原型链/" rel="prev" title="对象 原型 原型链">
+                对象 原型 原型链 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
     </footer>
@@ -445,8 +513,60 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -490,11 +610,11 @@
   </span>
   <span class="author" itemprop="copyrightHolder">栗子</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.3.0</div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
 
 
 
