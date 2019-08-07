@@ -58,14 +58,14 @@
   <meta name="description" content="看似不起波澜的日复一日，会突然在某一天让人看到坚持的意义。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="栗子的博客">
-<meta property="og:url" content="http://www.qianhui.tk/categories/常用/index.html">
+<meta property="og:url" content="https://qianhui.tk/categories/常用/index.html">
 <meta property="og:site_name" content="栗子的博客">
 <meta property="og:description" content="看似不起波澜的日复一日，会突然在某一天让人看到坚持的意义。">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="栗子的博客">
 <meta name="twitter:description" content="看似不起波澜的日复一日，会突然在某一天让人看到坚持的意义。">
-  <link rel="canonical" href="http://www.qianhui.tk/categories/常用/">
+  <link rel="canonical" href="https://qianhui.tk/categories/常用/">
 
 
 <script id="page-configurations">
@@ -278,7 +278,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -330,7 +330,9 @@
         
           
         
-        <span class="site-state-item-count">9</span>
+          
+        
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -439,6 +441,22 @@
 
   
 
+  
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
 
   
 </body>
