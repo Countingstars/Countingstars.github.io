@@ -55,21 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="对象对象可以通过多种方式来创建，包括通过对象字面量或者通过构造函数来创建对象，然后通过为其属性赋初值来执行初始化所有或部分对象的代码。每一个构造函数都有个名为prototype的属性，用来实现基于原型的继承「prototype-based inheritance」和共享属性「shared properties」。对象通过new操作符调用构建函数的方式创建。">
-<meta name="keywords" content="JS,对象,原型">
+  <meta name="description" content="部署本地easy mock1. Mongo DB, Redis安装一定要参考官网,网上教程步骤很有可能是旧的导致安装失败 1.1 Mongo DB安装首先官网下载,官网,![image-20200706181220582](/Users/star/Library/Application Support/typora-user-images/image-20200706181220582.png)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对象 原型 原型链">
-<meta property="og:url" content="https://qianhuili.tk/2019/08/05/obj-proto/index.html">
+<meta property="og:title" content="栗子的博客">
+<meta property="og:url" content="https://qianhuili.tk/2020/06/30/easy-mock/index.html">
 <meta property="og:site_name" content="栗子的博客">
-<meta property="og:description" content="对象对象可以通过多种方式来创建，包括通过对象字面量或者通过构造函数来创建对象，然后通过为其属性赋初值来执行初始化所有或部分对象的代码。每一个构造函数都有个名为prototype的属性，用来实现基于原型的继承「prototype-based inheritance」和共享属性「shared properties」。对象通过new操作符调用构建函数的方式创建。">
+<meta property="og:description" content="部署本地easy mock1. Mongo DB, Redis安装一定要参考官网,网上教程步骤很有可能是旧的导致安装失败 1.1 Mongo DB安装首先官网下载,官网,![image-20200706181220582](/Users/star/Library/Application Support/typora-user-images/image-20200706181220582.png)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://qianhuili.tk/images/prototype-relationships.png">
-<meta property="og:updated_time" content="2019-09-18T10:25:36.140Z">
+<meta property="og:updated_time" content="2020-07-06T11:46:55.167Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="对象 原型 原型链">
-<meta name="twitter:description" content="对象对象可以通过多种方式来创建，包括通过对象字面量或者通过构造函数来创建对象，然后通过为其属性赋初值来执行初始化所有或部分对象的代码。每一个构造函数都有个名为prototype的属性，用来实现基于原型的继承「prototype-based inheritance」和共享属性「shared properties」。对象通过new操作符调用构建函数的方式创建。">
-<meta name="twitter:image" content="https://qianhuili.tk/images/prototype-relationships.png">
-  <link rel="canonical" href="https://qianhuili.tk/2019/08/05/obj-proto/">
+<meta name="twitter:title" content="栗子的博客">
+<meta name="twitter:description" content="部署本地easy mock1. Mongo DB, Redis安装一定要参考官网,网上教程步骤很有可能是旧的导致安装失败 1.1 Mongo DB安装首先官网下载,官网,![image-20200706181220582](/Users/star/Library/Application Support/typora-user-images/image-20200706181220582.png)">
+  <link rel="canonical" href="https://qianhuili.tk/2020/06/30/easy-mock/">
 
 
 <script id="page-configurations">
@@ -83,7 +80,7 @@
   };
 </script>
 
-  <title>对象 原型 原型链 | 栗子的博客</title>
+  <title> | 栗子的博客</title>
   
 
 
@@ -198,7 +195,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://qianhuili.tk/2019/08/05/obj-proto/">
+    <link itemprop="mainEntityOfPage" href="https://qianhuili.tk/2020/06/30/easy-mock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="栗子">
@@ -212,7 +209,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">对象 原型 原型链
+          <h1 class="post-title" itemprop="name headline">
 
               
             
@@ -232,7 +229,7 @@
                 
               
 
-              <time title="创建时间：2019-08-05 19:21:55" itemprop="dateCreated datePublished" datetime="2019-08-05T19:21:55+08:00">2019-08-05</time>
+              <time title="创建时间：2020-06-30 17:57:24" itemprop="dateCreated datePublished" datetime="2020-06-30T17:57:24+08:00">2020-06-30</time>
             </span>
           
             
@@ -245,24 +242,9 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-18 18:25:36" itemprop="dateModified" datetime="2019-09-18T18:25:36+08:00">2019-09-18</time>
+                <time title="修改时间：2020-07-06 19:46:55" itemprop="dateModified" datetime="2020-07-06T19:46:55+08:00">2020-07-06</time>
               </span>
             
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -285,31 +267,57 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象可以通过多种方式来创建，包括通过对象字面量或者通过构造函数来创建对象，然后通过为其属性赋初值来执行初始化所有或部分对象的代码。每一个构造函数都有个名为<code>prototype</code>的属性，用来实现基于原型的继承「<em>prototype-based inheritance</em>」和共享属性「<em>shared properties</em>」。对象通过<code>new</code>操作符调用构建函数的方式创建。</p>
-<a id="more"></a>
+        <h3 id="部署本地easy-mock"><a href="#部署本地easy-mock" class="headerlink" title="部署本地easy mock"></a>部署本地easy mock</h3><h4 id="1-Mongo-DB-Redis安装"><a href="#1-Mongo-DB-Redis安装" class="headerlink" title="1. Mongo DB, Redis安装"></a>1. Mongo DB, Redis安装</h4><p>一定要参考官网,网上教程步骤很有可能是旧的导致安装失败</p>
+<h5 id="1-1-Mongo-DB安装"><a href="#1-1-Mongo-DB安装" class="headerlink" title="1.1 Mongo DB安装"></a>1.1 Mongo DB安装</h5><p>首先官网下载,<a href="https://www.mongodb.com/try#community" target="_blank" rel="noopener">官网</a>,![image-20200706181220582](/Users/star/Library/Application Support/typora-user-images/image-20200706181220582.png)</p>
+<p>下载完成后按<a href="https://docs.mongodb.com/guides/server/install/" target="_blank" rel="noopener">guides</a>进行解压启动</p>
+<ol>
+<li>可以在在命令行输入以下命令,解压下载文件,大家可以放在任意自己想放置的位置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mongodb-macos-x86_64-1.0.tgz</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过构造函数</span></span><br><span class="line"><span class="keyword">let</span> person = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">person.name = <span class="string">'a'</span></span><br><span class="line">person.age = <span class="number">18</span></span><br><span class="line"><span class="comment">// 通过字面量</span></span><br><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  b: <span class="number">1</span>,</span><br><span class="line">  c: <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>将bin/目录下的二进制文件添加到环境变量里,<code>&lt;mongodb-install-directory&gt;</code>就是你解压后的mongodb文件路径</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=&lt;mongodb-install-directory&gt;/bin:$PATH</span><br><span class="line">// 比如我的mongodb路径,添加到bash_profile中(linux里叫bashrc)</span><br><span class="line">export PATH=/Users/star/easymock/mongodb/bin:$PATH &gt;&gt;~/.bash_profile</span><br></pre></td></tr></table></figure>
 
-<h3 id="原型「prototype」"><a href="#原型「prototype」" class="headerlink" title="原型「prototype」"></a>原型「prototype」</h3><p>通过构造函数创建的<strong>每一个对象都有一个隐式引用</strong>（被称为原型对象「<em>this object’s prototype</em>」）,该引用指向它的构建函数的原型属性。<strong>每一个原型对象都可能有一个非空的隐式引用</strong>，指向另一个对象的原型对象，依次类推，由一层一层的隐式引用形成的连接称为原型链。当访问一个对象（假设叫<code>a</code>）中的某一属性时，会查找原型链中包含此属性的第一个对象。也就是说，首先会检查该对象（<code>a</code>）中是否包含此属性，如果包含，则引用指向此属性，如果不包含，则沿着原型链继续查找下一个对象和原型对象，直到原型对象为<code>null</code></p>
-<p><img src="/images/prototype-relationships.png" alt="原型和继承的关系"></p>
-<p>如上图所示关系：</p>
-<ul>
-<li><code>CF</code>是一个构造函数，包含属性<code>P1</code>、<code>P2</code>和一个原型属性<code>prototype</code>，指向原型对象<code>CFp</code>。<code>CFp</code>包含属性<code>CFP1</code>。</li>
-<li><code>cf1</code>、<code>cf2</code>…是通过构造函数<code>CF</code>创建的实例对象，包含属性<code>q1</code>、<code>q2</code>，和一个隐式引用，这引用指向构造函数<code>CF</code>的原型属性，即原型对象<code>CFp</code>。</li>
-<li><code>cf1</code>、<code>cf2</code>…共享原型链上的属性<code>CFP1</code>。</li>
-<li>对象通过原型链继承和共享属性。</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> CF = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.P1 = <span class="number">1</span></span><br><span class="line">  <span class="keyword">this</span>.P2 = <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">CF.prototype.CFP1 = <span class="number">3</span></span><br><span class="line"><span class="keyword">let</span> cf1 = <span class="keyword">new</span> CF()</span><br><span class="line">cf1.q1 = <span class="number">4</span></span><br><span class="line">cf1.q2 = <span class="number">5</span></span><br><span class="line"><span class="built_in">console</span>.log(cf1.CFP1) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>运行MongoDB</li>
+</ol>
+<p>首选创建db文件夹(默认目录: /data/db)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/db</span><br></pre></td></tr></table></figure>
 
-<p><strong>Notice：</strong> 我在“变量、作用域”中提过，通过new 构造函数创建对象的步骤之一-&gt;将构造函数中的变量复制过来。</p>
-<p>所以当改变实例对象的变量值时，继承了该实例对象的基本类型值不会改变，引用类型值会改变。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(cf1.P1) <span class="comment">// 1</span></span><br><span class="line">CF.P1 = <span class="string">'hello'</span></span><br><span class="line"><span class="comment">// 继承了原型链中实例的P1-&gt;是CF构造函数里P1的拷贝值</span></span><br><span class="line"><span class="built_in">console</span>.log(cf1.P1) <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>然后运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mongod</span><br><span class="line">// 没有权限的话,使用管理员权限</span><br><span class="line">sudo mongod</span><br></pre></td></tr></table></figure>
 
-<p><strong>总结：</strong>对象通过原型来继承和共享属性。</p>
-<hr>
-<div class="note success">
-            <p><strong>参考链接</strong>:</p><ul><li><a href="https://www.ecma-international.org/ecma-262/5.1/#sec-4.3.5" target="_blank" rel="noopener">ECMA-262 Object</a> </li></ul>
-          </div>
+<p>看到这个就成功啦:</p>
+<p>![image-20200706185806365](/Users/star/Library/Application Support/typora-user-images/image-20200706185806365.png)</p>
+<p>直接运行建立在之前添加到环境变量步骤成功,假如没有添加到系统环境变量中,需要在对应二进制文件目录下运行![image-20200706185652769](/Users/star/Library/Application Support/typora-user-images/image-20200706185652769.png)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;path to binary&gt;/mongod</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>&gt;&gt;~/.bash_profile</code>的解释:</p>
+<p><code>.bash_profile</code> is a script that is executed each time you start a new shell. On Linux, it’s called under different circumstances than <code>.bashrc</code>, but on OS X, they work exactly the same way. Any command you add to the file will be run whenever you open a new terminal window (thus starting a new interactive shell).</p>
+<p><code>$PATH</code> is a variable that tells the shell where to look for executable files - so when you type a command, the system will search each directory specified in that variable until it finds an executable program with that command’s name.</p>
+<p>The command <code>export PATH=/usr/local/bin:$PATH</code> prepends the directory <code>/usr/local/bin</code> to the current PATH, so it becomes the first directory searched by the shell.</p>
+</blockquote>
+<h5 id="1-2-redis"><a href="#1-2-redis" class="headerlink" title="1.2 redis"></a>1.2 redis</h5><p><a href="https://redis.io/download" target="_blank" rel="noopener">进入官网</a>,下载稳定版</p>
+<p>![image-20200706191907411](/Users/star/Library/Application Support/typora-user-images/image-20200706191907411.png)</p>
+<p>输入以下命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar xzf redis-6.0.5.tar.gz</span><br><span class="line">cd redis-6.0.5</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>成功后启动redis服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src/redis-server</span><br></pre></td></tr></table></figure>
+
+<p>看到这个成功啦![image-20200706192251318](/Users/star/Library/Application Support/typora-user-images/image-20200706192251318.png)</p>
+<h4 id="2-安装easy-mock"><a href="#2-安装easy-mock" class="headerlink" title="2. 安装easy-mock"></a>2. 安装easy-mock</h4><p><a href="https://github.com/easy-mock/easy-mock" target="_blank" rel="noopener">github</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/easy-mock/easy-mock.git</span><br><span class="line">cd easy-mock &amp;&amp; npm install</span><br></pre></td></tr></table></figure>
+
+<p>默认配置我就改了一个host,改成localhost,方便访问,其他没动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>接下里就可以访问 <a href="http://localhost:7300" target="_blank" rel="noopener">http://localhost:7300</a></p>
+<p>![image-20200706194518741](/Users/star/Library/Application Support/typora-user-images/image-20200706194518741.png)</p>
+
     </div>
 
     <div>
@@ -335,7 +343,7 @@
     <strong>本文作者： </strong>栗子</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qianhuili.tk/2019/08/05/obj-proto/" title="对象 原型 原型链">https://qianhuili.tk/2019/08/05/obj-proto/</a>
+    <a href="https://qianhuili.tk/2020/06/30/easy-mock/">https://qianhuili.tk/2020/06/30/easy-mock/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -344,20 +352,10 @@
       </div>
 
     <footer class="post-footer">
-          
-        
-        <div class="post-tags">
-            <a href="/tags/JS/" rel="tag"># JS</a>
-          
-            <a href="/tags/对象/" rel="tag"># 对象</a>
-          
-            <a href="/tags/原型/" rel="tag"># 原型</a>
-          
-        </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-              <a href="/2019/08/04/var-scope-this/" rel="next" title="变量 作用域 this">
-                <i class="fa fa-chevron-left"></i> 变量 作用域 this
+              <a href="/2020/02/07/vps/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -365,10 +363,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-              <a href="/2019/08/05/base-knowledge/" rel="prev" title="JS基本概念">
-                JS基本概念 <i class="fa fa-chevron-right"></i>
-              </a>
-            
           </div>
         </div>
     </footer>
@@ -500,7 +494,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象"><span class="nav-number">1.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原型「prototype」"><span class="nav-number">2.</span> <span class="nav-text">原型「prototype」</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署本地easy-mock"><span class="nav-number">1.</span> <span class="nav-text">部署本地easy mock</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Mongo-DB-Redis安装"><span class="nav-number">1.1.</span> <span class="nav-text">1. Mongo DB, Redis安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-Mongo-DB安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 Mongo DB安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2-redis"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 redis</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-安装easy-mock"><span class="nav-number">1.2.</span> <span class="nav-text">2. 安装easy-mock</span></a></li></ol></li></ol></div>
             
 
           </div>
