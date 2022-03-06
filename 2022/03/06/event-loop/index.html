@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next gemini" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="google-site-verification" content="4AgN7RA_vpQJC5H4LpoIiUo9CgZ-YQBvGgUHhBmDaGc" />
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"always","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="调用栈, Web APIs,事件队列, 微任务, 和 宏任务 原文链接：https://towardsdev.com/event-loop-in-javascript-672c07618dc9">
+<meta name="keywords" content="event loop,微任务,宏任务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】JavaScript事件循环解释说明">
+<meta property="og:url" content="https://countingstars.github.io/2022/03/06/event-loop/index.html">
+<meta property="og:site_name" content="栗子的博客">
+<meta property="og:description" content="调用栈, Web APIs,事件队列, 微任务, 和 宏任务 原文链接：https://towardsdev.com/event-loop-in-javascript-672c07618dc9">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*7coLKNPemPd9o40PmUvuvQ.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*0xDGBNrA1WtfSfYY3FJOdw.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*5K5JL9jhX10Yt2iArGVv4w.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*a_X8_BfQGJ6oHR-XmuPGRQ.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*Q5xtSx914wUAo_msjNk8qQ.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*H2QP7Ry7XCXDaD2dHkQYMw.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*PfxpUO9FJYm05lzA792CrQ.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1760/1*Eg9EkLzLfO0nZTpqNq9WCQ.gif">
+<meta property="og:image" content="https://miro.medium.com/max/1400/1*lw0nQ2U3x91SONIb6NsEwA.gif">
+<meta property="og:updated_time" content="2022-03-06T13:40:52.595Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】JavaScript事件循环解释说明">
+<meta name="twitter:description" content="调用栈, Web APIs,事件队列, 微任务, 和 宏任务 原文链接：https://towardsdev.com/event-loop-in-javascript-672c07618dc9">
+<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*7coLKNPemPd9o40PmUvuvQ.gif">
+  <link rel="canonical" href="https://countingstars.github.io/2022/03/06/event-loop/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>【译】JavaScript事件循环解释说明 | 栗子的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">栗子的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://countingstars.github.io/2022/03/06/event-loop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="栗子">
+      <meta itemprop="description" content="看似不起波澜的日复一日，会突然在某一天让人看到坚持的意义。">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="栗子的博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">【译】JavaScript事件循环解释说明
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-03-06 21:33:31 / 修改时间：21:40:52" itemprop="dateCreated datePublished" datetime="2022-03-06T21:33:31+08:00">2022-03-06</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon"
+              >
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>调用栈, Web APIs,事件队列, 微任务, 和 宏任务</p>
+<p>原文链接：<a href="https://towardsdev.com/event-loop-in-javascript-672c07618dc9" target="_blank" rel="noopener">https://towardsdev.com/event-loop-in-javascript-672c07618dc9</a></p>
+</blockquote>
+<a id="more"></a>
+
+<p>事件循环是JavaScript异步编程背后的秘密。JS在单线程上执行所有操作，但使用一些智能数据结    构，给我们带来了多线程的错觉。异步行为不是JavaScript语言本身的一部分，而是建立在浏览器（ 或编程环境）中的核心JavaScript语言之上，并通过浏览器的API访问。</p>
+<p>浏览器中 JavaScript 的执行流程和 Node.js 中的流程都是基于 <strong>事件循环</strong> 的。事件循环的概念非常简单。它是一个在 JavaScript 引擎等待任务，执行任务和进入休眠状态等待更多任务这几个状态之间转换的无限循环。</p>
+<p>引擎的一般算法：</p>
+<ol>
+<li>当有任务时-从最先进入的任务开始执行。</li>
+<li>休眠直到出现任务，然后转到第 1 步。</li>
+</ol>
+<p>当我们浏览一个网页时就是上述这种形式。JavaScript 引擎大多数时候不执行任何操作，它仅在脚本/处理程序/事件激活时执行。任务示例：</p>
+<ul>
+<li>当外部脚本 <code>&lt;script src=&quot;...&quot;&gt;</code> 加载完成时，任务就是执行它。</li>
+<li>当用户移动鼠标时，任务就是派生出 <code>mousemove</code> 事件和执行处理程序。</li>
+<li>当安排的（scheduled）<code>setTimeout</code> 时间到达时，任务就是执行其回调。</li>
+<li>……诸如此类。</li>
+</ul>
+<p>设置任务 —— 引擎处理它们 —— 然后等待更多任务（休眠时，几乎不消耗 CPU 资源）。让我们来看看背后发生了什么。</p>
+<h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled.png)</p>
+<ul>
+<li><strong>内存堆</strong> - 对象被分配在堆中，这只是一个名称，用来表示一个大的大部分非结构化的内存区域。</li>
+<li><strong>调用栈</strong> - 这代表了为JavaScript代码执行提供的单线程。函数调用形成一个堆栈的框架。它负责跟踪所有排队等待执行的操作。每当一个函数完成后，它就会从堆栈中弹出。它是一个LIFO队列（Last In, First Out）。</li>
+<li><strong>浏览器或Web AP</strong>I - 它们内置于你的网络浏览器中，能够从浏览器和周围的计算机环境中暴露出数据，并利用它做有用的复杂的事情。它们不是JavaScript语言本身的一部分，而是建立在核心JavaScript语言之上，为你的JavaScript代码提供了额外的超能力。                                             例如，Geolocation API提供了一些简单的JavaScript constructs来检索位置数据，这样你就可以说在谷歌地图上绘制你的位置。在后台，浏览器实际上正在使用一些复杂的低级代码（例如C++）与设备的GPS硬件（或任何可用于确定位置数据的东西）进行通信，检索位置数据，并将其返回给浏览器环境，以便在你的代码中使用。但同样，这种复杂性被API抽象出来了。</li>
+<li><strong>事件或回调队列</strong> - 它负责将new functions发送到轨道（track）上进行处理。它遵循队列数据结构，以保持所有操作应被发送执行的正确顺序。</li>
+</ul>
+<p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 1.png)</p>
+<p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 2.png)</p>
+<pre><code>调用栈和事件循环</code></pre><p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 3.png)</p>
+<pre><code>事件队列</code></pre><p>每当一个异步函数被调用时，它就会被发送给浏览器的API。这些是内置于浏览器的API。根据从调用堆中收到的命令，API开始自己的单线程操作。</p>
+<p>这方面的一个例子是setTimeout方法。当一个setTimeout操作在堆栈中被处理时，它被发送到相应的API，API等待到指定的时间再把这个操作送回来进行处理。</p>
+<p>它把操作发送到哪里？它会把操作发送到事件队列。因此，我们有一个循环系统来运行JavaScript中的异步操作。语言本身是单线程的，但浏览器的API可以作为独立的线程。</p>
+<p>事件循环为这个过程提供了便利。它有一个简单的工作–监控调用栈和回调队列。如果调用栈是空的，事件循环将从队列中获取第一个事件，并将其推送到调用栈中，从而有效地运行。如果不是，那么就处理当前的函数调用。</p>
+<p>让我们快速看一下一个例子，看看当我们在浏览器中运行以下代码时发生了什么：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"First"</span>);</span><br><span class="line"><span class="keyword">const</span> bar = <span class="function"><span class="params">()</span> =&gt;</span> setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"Second"</span>), <span class="number">500</span>);</span><br><span class="line"><span class="keyword">const</span> baz = <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"Third"</span>);</span><br><span class="line"></span><br><span class="line">bar();</span><br><span class="line">foo();</span><br><span class="line">baz();</span><br><span class="line">Output:</span><br><span class="line">First</span><br><span class="line">Third </span><br><span class="line">Second</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/1400/1*7coLKNPemPd9o40PmUvuvQ.gif" alt="https://miro.medium.com/max/1400/1*7coLKNPemPd9o40PmUvuvQ.gif"></p>
+<ol>
+<li>我们调用bar。bar返回一个setTimeout函数</li>
+<li>我们传递给setTimeout的回调被添加到Web API中，setTimeout函数和bar被从调用栈中弹出。</li>
+<li>计时器运行，与此同时，foo被调用并且输出First。foo返回（undefined）， baz被调用，setTimeout中回调被添加到队列中。</li>
+<li>baz输出Third。事件循环看到baz返回后调用栈是空的，之后setTimeout中回调被添加到调用栈中。</li>
+<li>setTimeout中回调输出Second</li>
+</ol>
+<p>事件循环继续执行所有在任务队列中等待的回调。在任务队列中，任务被大致分为两类，即微任务和宏任务。</p>
+<h2 id="事件循环中的微任务："><a href="#事件循环中的微任务：" class="headerlink" title="事件循环中的微任务："></a>事件循环中的微任务：</h2><ul>
+<li>微任务是指在创建它的函数或程序退出后并且只有在JavaScript执行堆栈为空，但在将控制权返回给用户代理用来驱动脚本执行环境的事件循环之前时，才会被执行的函数。一个微任务也能够排队等候其他微任务进行排队。</li>
+<li>微任务通常是为那些需要在执行当前脚本后立即完成的事情安排的。在完成一个宏任务后，事件循环转到微任务队列。在微任务队列中的所有任务完成之前，事件循环不会转移到微任务队列之外的下一个任务。这意味着微任务队列有更高的优先级。</li>
+<li>一旦微任务队列中的所有任务都完成了，事件循环才会转移到宏任务队列中。优先处理微任务队列的主要原因是为了改善用户体验。鉴于任何其他的JavaScript不在执行中，微任务队列会在回调之后被处理。微任务包括mutation <strong>observer</strong>回调以及promise回调。</li>
+<li>在这种情况下，新的微任务被添加到队列中，这些额外的微任务被添加到微任务队列的末端，这些也被处理。这是因为事件循环将持续调用微任务，直到队列中没有更多的微任务，即使新任务不断被添加。使用微任务的另一个重要原因是确保任务排序的一致性，以及同时减少由用户造成的延迟风险。</li>
+</ul>
+<p><strong>语法</strong>：添加微任务</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">queueMicrotask(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Code to be run inside the micro-task </span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>微任务函数本身不带任何参数，也不会返回值。</p>
+<p><strong>比如</strong>：process.nextTick, Promises, queueMicrotask, MutationObserver</p>
+<h2 id="事件循环中的宏任务："><a href="#事件循环中的宏任务：" class="headerlink" title="事件循环中的宏任务："></a>事件循环中的宏任务：</h2><ul>
+<li>宏观任务代表一些离散和独立的工作。这些总是发生在JavaScript代码的执行时和微观任务队列为空时。（These are always the execution of the JavaScript code and micro-task queue is empty）宏任务队列通常被认为与任务队列或事件队列相同。然而，宏任务队列的工作原理与任务队列相同。两者之间唯一的区别是，任务队列用于同步语句，而宏任务队列则用于异步语句。</li>
+<li>在JavaScript中，在一个事件发生之前，不允许执行任何代码。值得一提的是，一个JavaScript代码的执行本身就是一个宏任务。事件被作为一个宏任务排队。当一个存在于宏任务队列中的（宏）任务被执行时，新的事件可能会被注册，并反过来被创建和添加到队列中。</li>
+<li>初始化时，JavaScript引擎首先拉出宏任务队列中的第一个任务，并执行回调处理程序。然后，JavaScript引擎将这些异步函数发送给API模块，模块会在适当的时候将它们推送到宏任务队列中。一旦进入宏任务队列，每个宏任务就需要等待下一轮的事件循环。这样一来，代码就被执行了。</li>
+<li>在一个宏任务执行周期内，所有记录的微任务都被一举处理。相比之下，宏任务队列的优先级较低。宏任务包括解析HTML、生成DOM、执行主线程JavaScript代码，以及其他事件，如页面加载、输入、网络事件、定时器事件等。</li>
+</ul>
+<p>例如<strong>:</strong> setTimeout, setInterval, setImmediate, requestAnimationFrame, I/O, UI Rendering</p>
+<p>让我们来看一个简单使用、快速的例子</p>
+<ul>
+<li>Task1： 一个被立即添加到调用堆栈的函数，例如，在我们的代码中立即调用它</li>
+<li>Task2，Task3，Task4 ：微任务, 比如, a promise <code>then</code> 回调, 或者一个用<code>queueMicrotask</code>添加的任务</li>
+<li>Task5，Task6：一个（宏）任务，比如一个setTimeout或者setImmediate回调</li>
+</ul>
+<p><img src="https://miro.medium.com/max/1400/1*0xDGBNrA1WtfSfYY3FJOdw.gif" alt="https://miro.medium.com/max/1400/1*0xDGBNrA1WtfSfYY3FJOdw.gif"></p>
+<p>首先，Task1返回了一个值，并从调用栈中弹出。然后，引擎检查在微任务队列中排队的任务。一旦所有的任务都被放在调用栈上并最终被弹出，引擎就会再去检查宏任务队列中的任务，这些任务被弹到调用栈上，并在它们返回一个值时被弹出。让我们用一些真实的代码来使用它：</p>
+<p><strong>1) 使用setTimeout and Promise</strong></p>
+<p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 4.png)</p>
+<p>在这段代码中，我们有宏任务setTimeout和微任务promise then()回调。让我们一步一步地运行这段代码，看看打印出来什么。</p>
+<ol>
+<li>在第一行，引擎遇到了console.log()方法。它被添加到调用堆栈中，之后它将值Start！打印到控制台中。该方法被从调用栈中弹出，引擎继续运行。</li>
+<li>引擎遇到了setTimeout方法，它被弹出到调用栈中。setTimeout方法是浏览器的原生方法：它的回调函数（() =&gt; console.log(‘Timeout!’)）将被添加到Web API中，直到定时器完成。尽管我们为定时器设置值0，但回调仍然首先被推送到Web API，然后被添加到（宏）任务队列中：setTimeout是一个宏任务!</li>
+</ol>
+<p><img src="https://miro.medium.com/max/1760/1*5K5JL9jhX10Yt2iArGVv4w.gif" alt="https://miro.medium.com/max/1760/1*5K5JL9jhX10Yt2iArGVv4w.gif"></p>
+<p><img src="https://miro.medium.com/max/1760/1*a_X8_BfQGJ6oHR-XmuPGRQ.gif" alt="https://miro.medium.com/max/1760/1*a_X8_BfQGJ6oHR-XmuPGRQ.gif"></p>
+<ol>
+<li>引擎遇到了Promise.resolve()方法。Promise.resolve()方法被添加到调用堆栈中，之后会执行resolve(’Promise! ‘)然后它的回调函数被添加到微任务队列中。</li>
+<li>引擎遇到了console.log()方法。它立即被添加到调用堆栈中，之后它将值End！打印到到控制台，从调用堆栈中跳出，引擎继续运行。</li>
+</ol>
+<p><img src="https://miro.medium.com/max/1760/1*Q5xtSx914wUAo_msjNk8qQ.gif" alt="https://miro.medium.com/max/1760/1*Q5xtSx914wUAo_msjNk8qQ.gif"></p>
+<p><img src="https://miro.medium.com/max/1760/1*H2QP7Ry7XCXDaD2dHkQYMw.gif" alt="https://miro.medium.com/max/1760/1*H2QP7Ry7XCXDaD2dHkQYMw.gif"></p>
+<ol>
+<li>引擎看到调用栈现在是空的。既然调用栈是空的，它就会检查微任务队列中是否有排队的任务！是的，有，promise then回调正在等待轮到它。它被弹出到调用栈上，之后它打印出promise的解析值：在这种情况下是字符串Promise！。</li>
+<li>引擎看到调用栈是空的，所以它要再次检查微任务队列，看看是否有任务在排队。没有，微任务队列都是空的。所以现在是检查（宏）任务队列的时候了：setTimeout回调仍然在那里等待着 ！setTimeout回调被弹出到调用栈中。回调函数返回console.log方法，它打印出字符串 “Timeout!”。setTimeout回调被从调用栈中弹出。</li>
+</ol>
+<p><img src="https://miro.medium.com/max/1760/1*PfxpUO9FJYm05lzA792CrQ.gif" alt="https://miro.medium.com/max/1760/1*PfxpUO9FJYm05lzA792CrQ.gif"></p>
+<p><img src="https://miro.medium.com/max/1760/1*Eg9EkLzLfO0nZTpqNq9WCQ.gif" alt="https://miro.medium.com/max/1760/1*Eg9EkLzLfO0nZTpqNq9WCQ.gif"></p>
+<p><strong>2) Async/Await</strong></p>
+<p><img src="https://miro.medium.com/max/1400/1*lw0nQ2U3x91SONIb6NsEwA.gif" alt="https://miro.medium.com/max/1400/1*lw0nQ2U3x91SONIb6NsEwA.gif"></p>
+<ol>
+<li>首先，引擎遇到了一个console.log。它被弹出到调用栈中，之后Before function！被打印下来。</li>
+<li>然后，我们调用async myFunc()，之后，函数体myFunc运行，。在函数主体的第一行，我们调用另一个console.log，这次是字符串In function！。console.log被添加到调用栈中，记录数值，然后被弹出。</li>
+<li>函数体不断被执行，这让我们到了第二行。最后，我们看到一个 await 关键字!🎉 发生的第一件事是有await关键字被执行：即本例中的函数one()。它被弹出到调用栈中，并最终返回一个resolved promise。一旦promise resolved，并且one()返回一个值，引擎就会遇到 await 关键字。</li>
+<li>当遇到 await 关键字时，async 函数被暂停。✋🏼函数主体的执行被暂停，而async函数的其余部分则在一个微任务中运行，而不是在一个普通的任务中运行!</li>
+<li>现在，async myFunc因为遇到了await关键字而被暂停，引擎跳出了async函数，继续执行async函数被调用的执行上下文中的代码：在这种情况下就是全局执行上下文！🏃🏽‍♀️</li>
+<li>最后，在全局执行环境中没有更多的任务要运行了! 事件循环检查是否有任何排队的微任务：有的！async myFunc函数在resolve one()的值后进入到队列中。myFunc被弹回调用栈，并继续从它之间被停止的地方开始运行。</li>
+</ol>
+<p>最后，全部完成了! 你注意到async 函数与promise then相比有什么不同吗？await关键字暂停了async函数，而如果我们使用then的话，Promise主体就会一直被执行下去。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>我们已经了解了JavaScript的事件循环，它是一个不断运行的过程，用来协调调用栈和回调队列之间的任务以实现并发。</p>
+<p>希望这能让你更轻松的理解事件循环的概念。谢谢你的阅读 :)</p>
+
+    </div>
+
+    <div>
+      
+      <div>
+  
+    <div style="text-align:center;color: #ccc;font-size:14px;margin: 30px 0;">
+      -------------- 本文结束，感谢阅读(￣▽￣)~*--------------
+    </div>
+  
+</div>
+      
+    </div>
+
+    
+    
+    
+      <div>
+        
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>栗子</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://countingstars.github.io/2022/03/06/event-loop/" title="【译】JavaScript事件循环解释说明">https://countingstars.github.io/2022/03/06/event-loop/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/event-loop/" rel="tag"># event loop</a>
+          
+            <a href="/tags/微任务/" rel="tag"># 微任务</a>
+          
+            <a href="/tags/宏任务/" rel="tag"># 宏任务</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2020/07/07/easymock/" rel="next" title="部署本地easy mock">
+                <i class="fa fa-chevron-left"></i> 部署本地easy mock
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/head.png"
+      alt="栗子">
+  <p class="site-author-name" itemprop="name">栗子</p>
+  <div class="site-description motion-element" itemprop="description">看似不起波澜的日复一日，会突然在某一天让人看到坚持的意义。</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础架构"><span class="nav-number">1.</span> <span class="nav-text">基础架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件循环中的微任务："><span class="nav-number">2.</span> <span class="nav-text">事件循环中的微任务：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件循环中的宏任务："><span class="nav-number">3.</span> <span class="nav-text">事件循环中的宏任务：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">栗子</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+    
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+
+
+  <script src="/js/affix.js?v=7.3.0"></script>
+  <script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>
