@@ -64,8 +64,13 @@
 <meta property="og:site_name" content="栗子的博客">
 <meta property="og:description" content="调用栈, Web APIs,事件队列, 微任务, 和 宏任务 原文链接：https://towardsdev.com/event-loop-in-javascript-672c07618dc9">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%201.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%202.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%203.png">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*7coLKNPemPd9o40PmUvuvQ.gif">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*0xDGBNrA1WtfSfYY3FJOdw.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%204.png">
 <meta property="og:image" content="https://miro.medium.com/max/1760/1*5K5JL9jhX10Yt2iArGVv4w.gif">
 <meta property="og:image" content="https://miro.medium.com/max/1760/1*a_X8_BfQGJ6oHR-XmuPGRQ.gif">
 <meta property="og:image" content="https://miro.medium.com/max/1760/1*Q5xtSx914wUAo_msjNk8qQ.gif">
@@ -73,11 +78,11 @@
 <meta property="og:image" content="https://miro.medium.com/max/1760/1*PfxpUO9FJYm05lzA792CrQ.gif">
 <meta property="og:image" content="https://miro.medium.com/max/1760/1*Eg9EkLzLfO0nZTpqNq9WCQ.gif">
 <meta property="og:image" content="https://miro.medium.com/max/1400/1*lw0nQ2U3x91SONIb6NsEwA.gif">
-<meta property="og:updated_time" content="2022-03-06T13:40:52.595Z">
+<meta property="og:updated_time" content="2022-03-06T14:19:58.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】JavaScript事件循环解释说明">
 <meta name="twitter:description" content="调用栈, Web APIs,事件队列, 微任务, 和 宏任务 原文链接：https://towardsdev.com/event-loop-in-javascript-672c07618dc9">
-<meta name="twitter:image" content="https://miro.medium.com/max/1400/1*7coLKNPemPd9o40PmUvuvQ.gif">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled.png">
   <link rel="canonical" href="https://countingstars.github.io/2022/03/06/event-loop/">
 
 
@@ -241,7 +246,7 @@
                 
               
 
-              <time title="创建时间：2022-03-06 21:33:31 / 修改时间：21:40:52" itemprop="dateCreated datePublished" datetime="2022-03-06T21:33:31+08:00">2022-03-06</time>
+              <time title="创建时间：2022-03-06 21:33:31 / 修改时间：22:19:58" itemprop="dateCreated datePublished" datetime="2022-03-06T21:33:31+08:00">2022-03-06</time>
             </span>
           
             
@@ -305,17 +310,21 @@
 <li>……诸如此类。</li>
 </ul>
 <p>设置任务 —— 引擎处理它们 —— 然后等待更多任务（休眠时，几乎不消耗 CPU 资源）。让我们来看看背后发生了什么。</p>
-<h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled.png)</p>
+<h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p><img src="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled.png" alt></p>
 <ul>
 <li><strong>内存堆</strong> - 对象被分配在堆中，这只是一个名称，用来表示一个大的大部分非结构化的内存区域。</li>
 <li><strong>调用栈</strong> - 这代表了为JavaScript代码执行提供的单线程。函数调用形成一个堆栈的框架。它负责跟踪所有排队等待执行的操作。每当一个函数完成后，它就会从堆栈中弹出。它是一个LIFO队列（Last In, First Out）。</li>
 <li><strong>浏览器或Web AP</strong>I - 它们内置于你的网络浏览器中，能够从浏览器和周围的计算机环境中暴露出数据，并利用它做有用的复杂的事情。它们不是JavaScript语言本身的一部分，而是建立在核心JavaScript语言之上，为你的JavaScript代码提供了额外的超能力。                                             例如，Geolocation API提供了一些简单的JavaScript constructs来检索位置数据，这样你就可以说在谷歌地图上绘制你的位置。在后台，浏览器实际上正在使用一些复杂的低级代码（例如C++）与设备的GPS硬件（或任何可用于确定位置数据的东西）进行通信，检索位置数据，并将其返回给浏览器环境，以便在你的代码中使用。但同样，这种复杂性被API抽象出来了。</li>
 <li><strong>事件或回调队列</strong> - 它负责将new functions发送到轨道（track）上进行处理。它遵循队列数据结构，以保持所有操作应被发送执行的正确顺序。</li>
 </ul>
-<p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 1.png)</p>
-<p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 2.png)</p>
-<pre><code>调用栈和事件循环</code></pre><p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 3.png)</p>
-<pre><code>事件队列</code></pre><p>每当一个异步函数被调用时，它就会被发送给浏览器的API。这些是内置于浏览器的API。根据从调用堆中收到的命令，API开始自己的单线程操作。</p>
+<p><img src="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%201.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%202.png" alt></p>
+<center>调用栈和事件循环</center>
+
+<p><img src="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%203.png" alt></p>
+ <center>事件队列</center>
+
+<p>每当一个异步函数被调用时，它就会被发送给浏览器的API。这些是内置于浏览器的API。根据从调用堆中收到的命令，API开始自己的单线程操作。</p>
 <p>这方面的一个例子是setTimeout方法。当一个setTimeout操作在堆栈中被处理时，它被发送到相应的API，API等待到指定的时间再把这个操作送回来进行处理。</p>
 <p>它把操作发送到哪里？它会把操作发送到事件队列。因此，我们有一个循环系统来运行JavaScript中的异步操作。语言本身是单线程的，但浏览器的API可以作为独立的线程。</p>
 <p>事件循环为这个过程提供了便利。它有一个简单的工作–监控调用栈和回调队列。如果调用栈是空的，事件循环将从队列中获取第一个事件，并将其推送到调用栈中，从而有效地运行。如果不是，那么就处理当前的函数调用。</p>
@@ -358,7 +367,7 @@
 <p><img src="https://miro.medium.com/max/1400/1*0xDGBNrA1WtfSfYY3FJOdw.gif" alt="https://miro.medium.com/max/1400/1*0xDGBNrA1WtfSfYY3FJOdw.gif"></p>
 <p>首先，Task1返回了一个值，并从调用栈中弹出。然后，引擎检查在微任务队列中排队的任务。一旦所有的任务都被放在调用栈上并最终被弹出，引擎就会再去检查宏任务队列中的任务，这些任务被弹到调用栈上，并在它们返回一个值时被弹出。让我们用一些真实的代码来使用它：</p>
 <p><strong>1) 使用setTimeout and Promise</strong></p>
-<p>![Untitled](/Users/star/Documents/Export-40fb4fd9-b634-4cdc-ad1f-613e513faf09/[译]JavaScr d8495/Untitled 4.png)</p>
+<p><img src="https://raw.githubusercontent.com/Countingstars/Picture/master/img/Untitled%204.png" alt></p>
 <p>在这段代码中，我们有宏任务setTimeout和微任务promise then()回调。让我们一步一步地运行这段代码，看看打印出来什么。</p>
 <ol>
 <li>在第一行，引擎遇到了console.log()方法。它被添加到调用堆栈中，之后它将值Start！打印到控制台中。该方法被从调用栈中弹出，引擎继续运行。</li>
